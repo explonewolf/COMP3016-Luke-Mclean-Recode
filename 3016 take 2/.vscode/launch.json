@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/3016 take 2/3016 take 2.exe", // Path to your executable
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/3016 take 2", // Working directory
+            "environment": [],
+            "externalConsole": true, // Set to true if you want to use an external console
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++.exe build active file", // This should match the label in tasks.json
+            "logging": {
+                "engineLogging": true
+            }
+        }
+    ]
+}
