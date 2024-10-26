@@ -3,13 +3,15 @@
 #define FUNCTIONS_H
 
 #include <string>
+#include <utility>
 
 class Character {
 public:
     std::string name;
     int health;
+    std::pair<int, int> attack_range; // Add attack_range as a pair of integers
 
-    Character(std::string n, int h) : name(n), health(h) {}
+    Character(std::string n, int h) : name(n), health(h), attack_range(5, 15) {} // Initialize attack_range
 
     int attack(Character& other);
     void mercy();

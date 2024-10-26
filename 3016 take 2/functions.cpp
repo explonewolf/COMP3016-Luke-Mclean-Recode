@@ -11,13 +11,13 @@
 
 int Character::attack(Character& other) {
     std::cout << name << " is attacking " << other.name << std::endl; // Debug statement
-    int damage = rand() % 11 + 5; // Random damage between 5 and 15 for the attacker
+    int damage = rand() % (attack_range.second - attack_range.first + 1) + attack_range.first; // Use attack_range for damage
     other.health -= damage; // Apply damage to the opponent's health
 
     // Create message for the attack
     std::string action_message = name + " attacks " + other.name + " for " + std::to_string(damage) + " damage!";
     
-    //Flash the screen with the action message
+    // Flash the screen with the action message
     flash_screen(action_message, "", damage); // Only show the attack action
 
     //Print the damage dealt

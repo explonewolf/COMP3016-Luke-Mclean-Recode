@@ -140,6 +140,7 @@ int main() {
     std::vector<std::string> map = load_map_from_file("maps/Tutorial.txt");
 
     int player_x = 1, player_y = 1; // Initial player position
+    int mercy_count = 0; // Initialize mercy_count
 
     while (true) {
         system("cls"); // Clear the console (Windows-specific)
@@ -176,28 +177,40 @@ int main() {
     // Start tutorial fight
     Character player("@", 100);
     Character enemy("Tutorial Enemy", 50);
+    int enemy_max_health = enemy.health;
 
     load_game(player, enemy); // Load game state
 
     while (player.is_alive() && enemy.is_alive()) {
         display_health(player, enemy);
         std::string action;
-        std::cout << "Choose action: (attack/mercy): ";
+        if (enemy.health < 0.2 * enemy_max_health) {
+            std::cout << "\033[33mMercy is available!\033[0m\n";
+        }
+        std::cout << "Choose action: (attack/mercy):\n";
         std::cin >> action;
+        
 
         if (action == "attack") {
             player_attack(player, enemy); // Player attacks
             enemy_attack(enemy, player); // Enemy attacks back
-            //std::cout << player.name << " HP: " << player.health << " | " << enemy.name << " HP: " << enemy.health << "\n";
         } else if (action == "mercy") {
-            player.mercy();
+            if (enemy.health < 0.2 * enemy_max_health) { // Check if enemy's health is below 20%
+                std::cout << "You showed mercy and ended the fight!\n";
+                mercy_count++; // Increment mercy_count
+                break; // End the fight
+            } else {
+                player.mercy();
+            }
         } else {
             std::cout << "Invalid action!\n";
         }
     }
 
     if (player.is_alive()) {
-        std::cout << "You defeated the enemy!\n";
+        std::cout << "You defeated the enemy and received a Wooden Sword!\n";
+        // Update player's attack range
+        player.attack_range = {15, 20};
     } else {
         std::cout << "You have been defeated!\n";
     }
