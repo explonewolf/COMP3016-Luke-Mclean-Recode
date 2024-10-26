@@ -91,7 +91,7 @@ std::vector<std::string> load_map_from_file(const std::string& filename) {
 }
 
 bool can_move_to(int x, int y, const std::vector<std::string>& map) {
-    return map[y][x] != 'T'; // Check if the target position is not a tree
+    return map[y][x] != 'T' && map[y][x] != 'P' && map[y][x] != 'D'; // Check if the target position is not a tree, person, or door
 }
 
 void display_header(int terminal_width) {
@@ -142,6 +142,10 @@ int main() {
     int player_x = 1, player_y = 1; // Initial player position
     int mercy_count = 0; // Initialize mercy_count
 
+    // Declare player and enemy outside the loop
+    Character player("@", 100);
+    Character enemy("Tutorial Enemy", 50);
+
     while (true) {
         system("cls"); // Clear the console (Windows-specific)
         int terminal_width = get_terminal_width();
@@ -161,7 +165,7 @@ int main() {
         else if (action == 'a' && player_x > 0) new_x--;
         else if (action == 'd' && player_x < map[0].size() - 1) new_x++;
 
-        // Check if the new position is valid (not a tree)
+        // Check if the new position is valid (not a tree, person, or door)
         if (can_move_to(new_x, new_y, map)) {
             player_x = new_x;
             player_y = new_y;
@@ -170,52 +174,59 @@ int main() {
         if (action == 'e' && is_next_to_p(player_x, player_y, map)) {
             std::cout << "Starting tutorial fight!\n";
             
-            break; // Exit loop to start fight
-        }
-    }
+            // Start tutorial fight
+            int enemy_max_health = enemy.health;
 
-    // Start tutorial fight
-    Character player("@", 100);
-    Character enemy("Tutorial Enemy", 50);
-    int enemy_max_health = enemy.health;
+            load_game(player, enemy, mercy_count); // Load game state
 
-    load_game(player, enemy); // Load game state
+            while (player.is_alive() && enemy.is_alive()) {
+                display_health(player, enemy);
+                std::string action;
+                if (enemy.health < 0.2 * enemy_max_health) {
+                    std::cout << "\033[33mMercy is available!\n\033[0m";
+                }
+                std::cout << "Choose action: (attack/mercy): ";
+                std::cin >> action;
+                
 
-    while (player.is_alive() && enemy.is_alive()) {
-        display_health(player, enemy);
-        std::string action;
-        if (enemy.health < 0.2 * enemy_max_health) {
-            std::cout << "\033[33mMercy is available!\033[0m\n";
-        }
-        std::cout << "Choose action: (attack/mercy):\n";
-        std::cin >> action;
-        
-
-        if (action == "attack") {
-            player_attack(player, enemy); // Player attacks
-            enemy_attack(enemy, player); // Enemy attacks back
-        } else if (action == "mercy") {
-            if (enemy.health < 0.2 * enemy_max_health) { // Check if enemy's health is below 20%
-                std::cout << "You showed mercy and ended the fight!\n";
-                mercy_count++; // Increment mercy_count
-                break; // End the fight
-            } else {
-                player.mercy();
+                if (action == "attack") {
+                    player_attack(player, enemy); // Player attacks
+                    enemy_attack(enemy, player); // Enemy attacks back
+                } else if (action == "mercy") {
+                    if (enemy.health < 0.2 * enemy_max_health) { // Check if enemy's health is below 20%
+                        std::cout << "You showed mercy and ended the fight!\n";
+                        mercy_count++; // Increment mercy_count
+                        break; // End the fight
+                    } else {
+                        player.mercy();
+                    }
+                } else {
+                    std::cout << "Invalid action!\n";
+                }
             }
-        } else {
-            std::cout << "Invalid action!\n";
-        }
+
+            if (player.is_alive()) {
+                std::cout << "You defeated the enemy and received a Wooden Sword!\n";
+                // Update player's attack range
+                player.attack_range = {15, 20};
+
+                // Remove 'P' from the map
+                for (auto& row : map) {
+                    std::replace(row.begin(), row.end(), 'P', ' ');
+                }
+            } else {
+                std::cout << "You have been defeated!\n";
+                break; // Exit the game loop if the player is defeated
+            }
+        } else if (action == 'e' && is_next_to_door(player_x, player_y, map)) {
+            std::cout << "You opened the door and entered the next area!\n";
+            map = load_map_from_file("maps/level1.txt"); // Load the next map
+            player_x = 1; // Reset player position or set to desired spawn point
+            player_y = 1; // Reset player position or set to desired spawn point
+}
     }
 
-    if (player.is_alive()) {
-        std::cout << "You defeated the enemy and received a Wooden Sword!\n";
-        // Update player's attack range
-        player.attack_range = {15, 20};
-    } else {
-        std::cout << "You have been defeated!\n";
-    }
-
-    save_game(player, enemy); // Save game state
+    save_game(player, enemy, mercy_count); // Save game state
     end_screen(player); // Display end screen
     return 1;
 }
@@ -230,4 +241,6 @@ int main() {
 //   4. Use the Error List window to view errors
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
+
 

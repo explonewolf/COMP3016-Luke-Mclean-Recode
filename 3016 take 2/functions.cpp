@@ -8,6 +8,7 @@
 #include <chrono>
 #include <windows.h>
 #include "functions.h"
+#include <vector>
 
 int Character::attack(Character& other) {
     std::cout << name << " is attacking " << other.name << std::endl; // Debug statement
@@ -38,22 +39,26 @@ void display_health(const Character& player, const Character& enemy) {
     std::cout << player.name << " HP: " << player.health << " | " << enemy.name << " HP: " << enemy.health << "\n";
 }
 
-void save_game(const Character& player, const Character& enemy) {
+void save_game(const Character& player, const Character& enemy, const int mercy_count) {
     std::ofstream file("save.txt");
-    file << player.name << "," << player.health << "\n";
-    file << enemy.name << "," << enemy.health << "\n";
+    file << player.name << " " << player.health << "\n";
+    file << "mercy count " << mercy_count <<"\n";
+    file << enemy.name << " " << enemy.health << "\n";
+    
 }
 
-void load_game(Character& player, Character& enemy) {
+void load_game(Character& player, Character& enemy, int& mercy_count) {
     std::ifstream file("save.txt");
     if (file.is_open()) {
-        std::string player_data, enemy_data;
+        std::string player_data, enemy_data, mercy_data;
         std::getline(file, player_data);
+        std::getline(file, mercy_data);
         std::getline(file, enemy_data);
-        player.name = player_data.substr(0, player_data.find(','));
-        player.health = std::stoi(player_data.substr(player_data.find(',') + 1));
-        enemy.name = enemy_data.substr(0, enemy_data.find(','));
-        enemy.health = std::stoi(enemy_data.substr(enemy_data.find(',') + 1));
+        player.name = player_data.substr(0, player_data.find(' '));
+        player.health = std::stoi(player_data.substr(player_data.find(' ') + 1));
+        mercy_count = std::stoi(mercy_data.substr(mercy_data.find(' ') + 1));
+        enemy.name = enemy_data.substr(0, enemy_data.find(' '));
+        enemy.health = std::stoi(enemy_data.substr(enemy_data.find(' ') + 1));
     } else {
         player = Character("@", 100);
         enemy = Character("Tutorial Enemy", 50);
@@ -103,4 +108,11 @@ void enemy_attack(Character& enemy, Character& player) {
         std::cout << "\033[31m" << enemy.name << " attacks " << player.name << " for " << damage << " damage!\033[0m\n";
         std::cout << player.name << " attacks " << enemy.name << " for " << damage1 << " damage!\n";
     }
+}
+
+bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>& map) {
+    return (player_x > 0 && map[player_y][player_x - 1] == 'D') ||
+           (player_x < map[0].size() - 1 && map[player_y][player_x + 1] == 'D') ||
+           (player_y > 0 && map[player_y - 1][player_x] == 'D') ||
+           (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'D');
 }

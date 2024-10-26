@@ -4,6 +4,7 @@
 
 #include <string>
 #include <utility>
+#include <vector>
 
 class Character {
 public:
@@ -19,12 +20,12 @@ public:
 };
 
 void display_health(const Character& player, const Character& enemy);
-void save_game(const Character& player, const Character& enemy);
-void load_game(Character& player, Character& enemy);
+void save_game(const Character& player, const Character& enemy, int mercy_count);
+void load_game(Character& player, Character& enemy, int& mercy_count);
 void flash_screen(const std::string& player_action, const std::string& enemy_action, int damage);
 void load_map(const std::string& filename);
 void end_screen(const Character& player);
 void player_attack(Character& player, Character& enemy);
 void enemy_attack(Character& enemy, Character& player);
-
+bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>& map);
 #endif // FUNCTIONS_H
