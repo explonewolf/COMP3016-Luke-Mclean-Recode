@@ -10,6 +10,7 @@
 #include <conio.h> // For getch() on Windows
 #include <windows.h> // For GetConsoleScreenBufferInfo
 #include "functions.h"
+#include <algorithm>
 
 int get_terminal_width() {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
