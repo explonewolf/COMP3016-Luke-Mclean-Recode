@@ -39,29 +39,66 @@ void display_health(const Character& player, const Character& enemy) {
     std::cout << player.name << " HP: " << player.health << " | " << enemy.name << " HP: " << enemy.health << "\n";
 }
 
-void save_game(const Character& player, const Character& enemy, const int mercy_count) {
+void save_game(const Character& player, const Character& enemy, const int mercy_count, int player_x, int player_y, const std::string& map_filename) {
     std::ofstream file("save.txt");
     file << player.name << " " << player.health << "\n";
-    file << "mercy count " << mercy_count <<"\n";
+    file << "mercy count " << mercy_count << "\n";
     file << enemy.name << " " << enemy.health << "\n";
-    
+    file << "player position " << player_x << " " << player_y << "\n";
+    file << "map " << map_filename << "\n";
 }
 
-void load_game(Character& player, Character& enemy, int& mercy_count) {
+void load_game(Character& player, Character& enemy, int& mercy_count, int& player_x, int& player_y, std::string& map_filename) {
     std::ifstream file("save.txt");
     if (file.is_open()) {
-        std::string player_data, enemy_data, mercy_data;
+        std::string player_data, enemy_data, mercy_data, position_data, map_data;
         std::getline(file, player_data);
         std::getline(file, mercy_data);
         std::getline(file, enemy_data);
-        player.name = player_data.substr(0, player_data.find(' '));
-        player.health = std::stoi(player_data.substr(player_data.find(' ') + 1));
-        mercy_count = std::stoi(mercy_data.substr(mercy_data.find(' ') + 1));
-        enemy.name = enemy_data.substr(0, enemy_data.find(' '));
-        enemy.health = std::stoi(enemy_data.substr(enemy_data.find(' ') + 1));
+        std::getline(file, position_data);
+        std::getline(file, map_data);
+
+        try {
+            // Player health
+            player.name = player_data.substr(0, player_data.find(' '));
+            std::string player_health_str = player_data.substr(player_data.find(' ') + 1);
+            std::cout << "Player health string: " << player_health_str << std::endl;
+            player.health = std::stoi(player_health_str);
+
+            // Mercy count
+            std::string mercy_count_str = mercy_data.substr(mercy_data.rfind(' ') + 1);
+            std::cout << "Mercy count string: " << mercy_count_str << std::endl;
+            mercy_count = std::stoi(mercy_count_str);
+
+            // Enemy health
+            enemy.name = enemy_data.substr(0, enemy_data.rfind(' '));
+            std::string enemy_health_str = enemy_data.substr(enemy_data.rfind(' ') + 1);
+            std::cout << "Enemy health string: " << enemy_health_str << std::endl;
+            enemy.health = std::stoi(enemy_health_str);
+
+            // Player position
+            size_t first_space = position_data.find(' ', position_data.find(' ') + 1);
+            std::string player_x_str = position_data.substr(first_space + 1, position_data.find(' ', first_space + 1) - first_space - 1);
+            std::cout << "Player X position string: " << player_x_str << std::endl;
+            player_x = std::stoi(player_x_str);
+
+            std::string player_y_str = position_data.substr(position_data.rfind(' ') + 1);
+            std::cout << "Player Y position string: " << player_y_str << std::endl;
+            player_y = std::stoi(player_y_str);
+
+            // Map filename
+            map_filename = map_data.substr(map_data.find(' ') + 1);
+        } catch (const std::exception& e) {
+            std::cerr << "Error loading game state: " << e.what() << std::endl;
+            Sleep(5000);
+            // Set default values or handle the error as needed
+        }
     } else {
         player = Character("@", 100);
         enemy = Character("Tutorial Enemy", 50);
+        player_x = 1;
+        player_y = 1;
+        map_filename = "maps/Tutorial.txt";
     }
 }
 
@@ -109,10 +146,10 @@ void enemy_attack(Character& enemy, Character& player) {
         std::cout << player.name << " attacks " << enemy.name << " for " << damage1 << " damage!\n";
     }
 }
-
 bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>& map) {
     return (player_x > 0 && map[player_y][player_x - 1] == 'D') ||
            (player_x < map[0].size() - 1 && map[player_y][player_x + 1] == 'D') ||
            (player_y > 0 && map[player_y - 1][player_x] == 'D') ||
            (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'D');
 }
+

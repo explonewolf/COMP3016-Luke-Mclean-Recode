@@ -20,8 +20,8 @@ public:
 };
 
 void display_health(const Character& player, const Character& enemy);
-void save_game(const Character& player, const Character& enemy, int mercy_count);
-void load_game(Character& player, Character& enemy, int& mercy_count);
+void save_game(const Character& player, const Character& enemy, int mercy_count, int player_x, int player_y, const std::string& map_filename);
+void load_game(Character& player, Character& enemy, int& mercy_count, int& player_x, int& player_y, std::string& map_filename);
 void flash_screen(const std::string& player_action, const std::string& enemy_action, int damage);
 void load_map(const std::string& filename);
 void end_screen(const Character& player);

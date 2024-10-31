@@ -136,8 +136,8 @@ void display_header(int terminal_width) {
 int main() {
     srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
 
-    // Load map from file
-    std::vector<std::string> map = load_map_from_file("maps/Tutorial.txt");
+    std::string map_filename = "maps/Tutorial.txt"; // Default map
+    std::vector<std::string> map = load_map_from_file(map_filename);
 
     int player_x = 1, player_y = 1; // Initial player position
     int mercy_count = 0; // Initialize mercy_count
@@ -145,6 +145,10 @@ int main() {
     // Declare player and enemy outside the loop
     Character player("@", 100);
     Character enemy("Tutorial Enemy", 50);
+
+    // Load game state
+    load_game(player, enemy, mercy_count, player_x, player_y, map_filename);
+    map = load_map_from_file(map_filename);
 
     while (true) {
         system("cls"); // Clear the console (Windows-specific)
@@ -171,13 +175,11 @@ int main() {
             player_y = new_y;
         }
 
-        if (action == 'e' && is_next_to_p(player_x, player_y, map)) {
+        if (action == 'e' && is_next_to_p(player_x, player_y, map) && map_filename == "maps/Tutorial.txt") {
             std::cout << "Starting tutorial fight!\n";
             
             // Start tutorial fight
             int enemy_max_health = enemy.health;
-
-            load_game(player, enemy, mercy_count); // Load game state
 
             while (player.is_alive() && enemy.is_alive()) {
                 display_health(player, enemy);
@@ -187,7 +189,6 @@ int main() {
                 }
                 std::cout << "Choose action: (attack/mercy): ";
                 std::cin >> action;
-                
 
                 if (action == "attack") {
                     player_attack(player, enemy); // Player attacks
@@ -206,8 +207,9 @@ int main() {
             }
 
             if (player.is_alive()) {
-                std::cout << "You defeated the enemy and received a Wooden Sword!\n";
+                std::cout << "\033[33mYou defeated the enemy and received a Wooden Sword!\033[0m\n";
                 // Update player's attack range
+                Sleep(3000);
                 player.attack_range = {15, 20};
 
                 // Remove 'P' from the map
@@ -220,13 +222,15 @@ int main() {
             }
         } else if (action == 'e' && is_next_to_door(player_x, player_y, map)) {
             std::cout << "You opened the door and entered the next area!\n";
-            map = load_map_from_file("maps/level1.txt"); // Load the next map
+            map_filename = "maps/level1.txt"; // Update map filename
+            map = load_map_from_file(map_filename); // Load the next map
             player_x = 1; // Reset player position or set to desired spawn point
             player_y = 1; // Reset player position or set to desired spawn point
-}
+            save_game(player, enemy, mercy_count, player_x, player_y, map_filename); // Save game state
+        }
     }
 
-    save_game(player, enemy, mercy_count); // Save game state
+    save_game(player, enemy, mercy_count, player_x, player_y, map_filename); // Save game state
     end_screen(player); // Display end screen
     return 1;
 }
