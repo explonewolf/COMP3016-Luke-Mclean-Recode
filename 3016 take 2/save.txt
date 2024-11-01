@@ -1,0 +1,5 @@
+@ 76
+mercy count 0
+Tutorial Enemy 0
+player position 1 1
+map maps/level1.txt

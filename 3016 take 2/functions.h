@@ -28,4 +28,5 @@ void end_screen(const Character& player);
 void player_attack(Character& player, Character& enemy);
 void enemy_attack(Character& enemy, Character& player);
 bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>& map);
+void fight_M(Character& player, const std::string& map_filename);
 #endif // FUNCTIONS_H

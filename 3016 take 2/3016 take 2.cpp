@@ -80,6 +80,13 @@ bool is_next_to_p(int player_x, int player_y, const std::vector<std::string>& ma
            (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'P');
 }
 
+bool is_next_to_m(int player_x, int player_y, const std::vector<std::string>& map) {
+    return (player_x > 0 && map[player_y][player_x - 1] == 'M') ||
+           (player_x < map[0].size() - 1 && map[player_y][player_x + 1] == 'M') ||
+           (player_y > 0 && map[player_y - 1][player_x] == 'M') ||
+           (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'M');
+}
+
 std::vector<std::string> load_map_from_file(const std::string& filename) {
     std::vector<std::string> map;
     std::ifstream file(filename);
@@ -227,6 +234,14 @@ int main() {
             player_x = 1; // Reset player position or set to desired spawn point
             player_y = 1; // Reset player position or set to desired spawn point
             save_game(player, enemy, mercy_count, player_x, player_y, map_filename); // Save game state
+
+        } else if (action == 'e' && is_next_to_m(player_x, player_y, map)) {
+            std::cout << "You encountered a monster!\n";
+            fight_M(player, map_filename);
+            Sleep(3000);
+        } else if (action == 'e' && is_next_to_p(player_x, player_y, map) && map_filename == "maps/level1.txt") {
+            std::cout << "You encountered a person!\n";
+            Sleep(3000);
         }
     }
 

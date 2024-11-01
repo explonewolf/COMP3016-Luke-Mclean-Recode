@@ -153,3 +153,47 @@ bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>&
            (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'D');
 }
 
+void fight_M(Character& player, const std::string& map_filename) {
+    // Determine the enemy type based on the map
+    std::string enemy_name;
+    if (map_filename == "maps/level1.txt") {
+        // Randomly select an enemy type for level 1
+        std::string enemies[] = {"Rat", "Squirrel", "Bunny", "Bird"};
+        int random_index = rand() % 4; // Random number between 0 and 3
+        enemy_name = enemies[random_index];
+    } else {
+        // Default enemy if map is not recognized
+        enemy_name = "Unknown Creature";
+    }
+
+    // Create the enemy character
+    Character enemy(enemy_name, 30);
+
+    std::cout << "You encountered a " << enemy.name << "!\n";
+
+    // Fight loop
+    while (player.is_alive() && enemy.is_alive()) {
+        display_health(player, enemy);
+        std::string action;
+        std::cout << "Choose action: (attack/mercy): ";
+        std::cin >> action;
+
+        if (action == "attack") {
+            player_attack(player, enemy); // Player attacks
+            if (enemy.is_alive()) {
+                enemy_attack(enemy, player); // Enemy attacks back
+            }
+        } else if (action == "mercy") {
+            player.mercy();
+        } else {
+            std::cout << "Invalid action!\n";
+        }
+    }
+
+    if (player.is_alive()) {
+        std::cout << "You defeated the " << enemy.name << "!\n";
+    } else {
+        std::cout << "You have been defeated by the " << enemy.name << "!\n";
+    }
+}
+
