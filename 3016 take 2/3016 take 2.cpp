@@ -98,7 +98,7 @@ std::vector<std::string> load_map_from_file(const std::string& filename) {
 }
 
 bool can_move_to(int x, int y, const std::vector<std::string>& map) {
-    return map[y][x] != 'T' && map[y][x] != 'P' && map[y][x] != 'D'; // Check if the target position is not a tree, person, or door
+    return map[y][x] != 'T' && map[y][x] != 'P' && map[y][x] != 'D' && map[y][x] != 'M'; // Check if the target position is not a tree, person, door, or monster
 }
 
 void display_header(int terminal_width) {
@@ -236,9 +236,25 @@ int main() {
             save_game(player, enemy, mercy_count, player_x, player_y, map_filename); // Save game state
 
         } else if (action == 'e' && is_next_to_m(player_x, player_y, map)) {
-            std::cout << "You encountered a monster!\n";
-            fight_M(player, map_filename);
-            Sleep(3000);
+            //std::cout << "You encountered a monster!\n";
+            //fight_M(player, map_filename); //true == player won, false == player lost
+            if (fight_M(player, map_filename)) {
+                Sleep(3000);
+                if (player_x > 0 && map[player_y][player_x - 1] == 'M') {
+                    map[player_y][player_x - 1] = ' ';
+                } else if (player_x < map[0].size() - 1 && map[player_y][player_x + 1] == 'M') {
+                    map[player_y][player_x + 1] = ' ';
+                } else if (player_y > 0 && map[player_y - 1][player_x] == 'M') {
+                    map[player_y - 1][player_x] = ' ';
+                } else if (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'M') {
+                    map[player_y + 1][player_x] = ' ';
+                }
+            }
+            else {
+                std::cout << "You have been defeated!\n";
+                break; // Exit the game loop if the player is defeated
+            }
+            
         } else if (action == 'e' && is_next_to_p(player_x, player_y, map) && map_filename == "maps/level1.txt") {
             std::cout << "You encountered a person!\n";
             Sleep(3000);

@@ -153,7 +153,7 @@ bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>&
            (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'D');
 }
 
-void fight_M(Character& player, const std::string& map_filename) {
+bool fight_M(Character& player, const std::string& map_filename) {
     // Determine the enemy type based on the map
     std::string enemy_name;
     if (map_filename == "maps/level1.txt") {
@@ -192,8 +192,12 @@ void fight_M(Character& player, const std::string& map_filename) {
 
     if (player.is_alive()) {
         std::cout << "You defeated the " << enemy.name << "!\n";
+        return true;
+        
     } else {
         std::cout << "You have been defeated by the " << enemy.name << "!\n";
+        Sleep(3000);
+        return false;
     }
 }
 
