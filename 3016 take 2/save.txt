@@ -1,5 +1,8 @@
-@ 58
+@ 53
 mercy count 1
 Tutorial Enemy 4
 player position 1 1
 map maps/level1.txt
+weapon Fists 15 20
+health potions 5
+gold 0

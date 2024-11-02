@@ -46,17 +46,21 @@ void save_game(const Character& player, const Character& enemy, const int mercy_
     file << enemy.name << " " << enemy.health << "\n";
     file << "player position " << player_x << " " << player_y << "\n";
     file << "map " << map_filename << "\n";
+    file << "weapon " << player.weapon << " " << player.attack_range.first << " " << player.attack_range.second << "\n"; // New line for weapon and attack range
+    file << "health potions " << player.health_potions << "\n"; // Save health potions
+    file << "gold " << player.gold << "\n"; // Save gold
 }
 
 void load_game(Character& player, Character& enemy, int& mercy_count, int& player_x, int& player_y, std::string& map_filename) {
     std::ifstream file("save.txt");
     if (file.is_open()) {
-        std::string player_data, enemy_data, mercy_data, position_data, map_data;
+        std::string player_data, enemy_data, mercy_data, position_data, map_data, weapon_data;
         std::getline(file, player_data);
         std::getline(file, mercy_data);
         std::getline(file, enemy_data);
         std::getline(file, position_data);
         std::getline(file, map_data);
+        std::getline(file, weapon_data); 
 
         try {
             // Player health
@@ -88,6 +92,26 @@ void load_game(Character& player, Character& enemy, int& mercy_count, int& playe
 
             // Map filename
             map_filename = map_data.substr(map_data.find(' ') + 1);
+
+            // Weapon and attack range
+            size_t weapon_end = weapon_data.find(' ', 7); // Find the end of the weapon name
+            player.weapon = weapon_data.substr(7, weapon_end - 7); // Extract weapon name
+            std::string attack_range_first_str = weapon_data.substr(weapon_end + 1, weapon_data.find(' ', weapon_end + 1) - weapon_end - 1);
+            std::string attack_range_second_str = weapon_data.substr(weapon_data.rfind(' ') + 1);
+            player.attack_range.first = std::stoi(attack_range_first_str);
+            player.attack_range.second = std::stoi(attack_range_second_str);
+
+            std::string potions_data, gold_data;
+            std::getline(file, potions_data);
+            std::getline(file, gold_data);
+
+            // Health potions
+            std::string potions_count_str = potions_data.substr(potions_data.rfind(' ') + 1);
+            player.health_potions = std::stoi(potions_count_str);
+
+            // Gold
+            std::string gold_count_str = gold_data.substr(gold_data.rfind(' ') + 1);
+            player.gold = std::stoi(gold_count_str);
         } catch (const std::exception& e) {
             std::cerr << "Error loading game state: " << e.what() << std::endl;
             Sleep(5000);
@@ -192,12 +216,24 @@ bool fight_M(Character& player, const std::string& map_filename) {
 
     if (player.is_alive()) {
         std::cout << "You defeated the " << enemy.name << "!\n";
+        int gold_earned = rand() % 3 + 3; // Random gold between 3 and 5
+        player.gold += gold_earned;
+        std::cout << "You earned " << gold_earned << " gold!\n";
         return true;
-        
     } else {
         std::cout << "You have been defeated by the " << enemy.name << "!\n";
         Sleep(3000);
         return false;
+    }
+}
+
+void Character::use_health_potion() {
+    if (health_potions > 0) {
+        health += 30; // Heal for 30 HP
+        health_potions--;
+        std::cout << name << " used a health potion and healed for 30 HP!\n";
+    } else {
+        std::cout << "No health potions left!\n";
     }
 }
 

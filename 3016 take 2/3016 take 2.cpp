@@ -101,11 +101,15 @@ bool can_move_to(int x, int y, const std::vector<std::string>& map) {
     return map[y][x] != 'T' && map[y][x] != 'P' && map[y][x] != 'D' && map[y][x] != 'M'; // Check if the target position is not a tree, person, door, or monster
 }
 
-void display_header(int terminal_width) {
+void display_header(int terminal_width, Character& player) {
     std::string instructions[] = {
         "Instructions:",
         "Use 'w', 'a', 's', 'd' to move.",
         "Press 'e' to interact.",
+        "Press 'h' to use a health potion.",
+        "health potions: " + std::to_string(player.health_potions),
+        "gold: " + std::to_string(player.gold),
+        "hp: " + std::to_string(player.health),
         "Defeat enemies to win."
     };
 
@@ -162,7 +166,7 @@ int main() {
         int terminal_width = get_terminal_width();
         int terminal_height = get_terminal_height();
 
-        display_header(terminal_width);
+        display_header(terminal_width, player);
         display_map(map, player_x, player_y, terminal_width, terminal_height);
 
         std::cout << "Move (w/a/s/d) or interact (e): ";
@@ -171,10 +175,17 @@ int main() {
         int new_x = player_x;
         int new_y = player_y;
 
-        if (action == 'w' && player_y > 0) new_y--;
-        else if (action == 's' && player_y < map.size() - 1) new_y++;
-        else if (action == 'a' && player_x > 0) new_x--;
-        else if (action == 'd' && player_x < map[0].size() - 1) new_x++;
+        if (action == 'h') {
+            player.use_health_potion();
+        } else if (action == 'w' && player_y > 0) {
+            new_y--;
+        } else if (action == 's' && player_y < map.size() - 1) {
+            new_y++;
+        } else if (action == 'a' && player_x > 0) {
+            new_x--;
+        } else if (action == 'd' && player_x < map[0].size() - 1) {
+            new_x++;
+        }
 
         // Check if the new position is valid (not a tree, person, or door)
         if (can_move_to(new_x, new_y, map)) {
@@ -215,11 +226,11 @@ int main() {
 
             if (player.is_alive()) {
                 std::cout << "\033[33mYou defeated the enemy and received a Wooden Sword!\033[0m\n";
-                // Update player's attack range
-                Sleep(3000);
                 player.attack_range = {15, 20};
+                player.health_potions += 5; // Give 5 health potions
+                std::cout << "You received 5 health potions!\n";
+                Sleep(3000);
 
-                // Remove 'P' from the map
                 for (auto& row : map) {
                     std::replace(row.begin(), row.end(), 'P', ' ');
                 }

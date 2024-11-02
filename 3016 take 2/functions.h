@@ -10,13 +10,17 @@ class Character {
 public:
     std::string name;
     int health;
-    std::pair<int, int> attack_range; // Add attack_range as a pair of integers
+    std::pair<int, int> attack_range; // attack_range as a pair of integers
+    std::string weapon; // attribute for weapon
+    int health_potions; // attribute for health potions
+    int gold; // attribute for gold
 
-    Character(std::string n, int h) : name(n), health(h), attack_range(5, 15) {} // Initialize attack_range
+    Character(std::string n, int h) : name(n), health(h), attack_range(5, 15), weapon("Fists"), health_potions(0), gold(0) {} // Initialize weapon
 
     int attack(Character& other);
     void mercy();
     bool is_alive();
+    void use_health_potion();
 };
 
 void display_health(const Character& player, const Character& enemy);
