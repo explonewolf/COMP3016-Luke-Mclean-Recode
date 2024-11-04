@@ -192,17 +192,17 @@ bool fight_M(Character& player, const std::string& map_filename, int& mercy_coun
         std::string enemies[] = {"Skeleton", "Zombie", "Ghost", "Vampire"};
         int random_index = rand() % 4; // Random number between 0 and 3
         enemy_name = enemies[random_index];
-        hp = 50;
+        hp = 90;
     } else if (map_filename == "maps/level3.txt") {
         std::string enemies[] = {"Wolf", "Bear", "Fox", "Rabbit"};
         int random_index = rand() % 4; // Random number between 0 and 3
         enemy_name = enemies[random_index];
-        hp = 70;
+        hp = 140;
     } else if (map_filename == "maps/level4.txt") {
         std::string enemies[] = {"demon", "devil", "ghost", "zombie"};
         int random_index = rand() % 4; // Random number between 0 and 3
         enemy_name = enemies[random_index];
-        hp = 100;
+        hp = 200;
     } else {
         // Default enemy if map is not recognized
         enemy_name = "Unknown Creature";
@@ -260,7 +260,7 @@ bool fight_M(Character& player, const std::string& map_filename, int& mercy_coun
         }   
         return true;
     } else {
-            std::cout << "You have been defeated by the " << enemy.name << "!\n";
+        std::cout << "You have been defeated by the " << enemy.name << "!\n";
         Sleep(3000);
         return false;
     }
