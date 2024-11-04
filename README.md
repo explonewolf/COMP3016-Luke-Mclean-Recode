@@ -1,5 +1,6 @@
 # COMP3016 Luke Mclean RPG text-based game
 https://github.com/explonewolf/COMP3016-Luke-Mclean-Recode
+https://youtu.be/ZL9ky_bVAco
 
 
 firstly delete save.txt
