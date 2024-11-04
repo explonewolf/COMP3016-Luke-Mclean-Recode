@@ -9,6 +9,7 @@
 #include <windows.h>
 #include "functions.h"
 #include <vector>
+#include <bits/algorithmfwd.h>
 
 int Character::attack(Character& other) {
     std::cout << name << " is attacking " << other.name << std::endl; // Debug statement
@@ -46,7 +47,7 @@ void save_game(const Character& player, const Character& enemy, const int mercy_
     file << enemy.name << " " << enemy.health << "\n";
     file << "player position " << player_x << " " << player_y << "\n";
     file << "map " << map_filename << "\n";
-    file << "weapon " << player.weapon << " " << player.attack_range.first << " " << player.attack_range.second << "\n"; // New line for weapon and attack range
+    file << "weapon " << player.weapon << " " << player.attack_range.first << " " << player.attack_range.second << "\n"; // line for weapon and attack range
     file << "health potions " << player.health_potions << "\n"; // Save health potions
     file << "gold " << player.gold << "\n"; // Save gold
 }
@@ -177,28 +178,47 @@ bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>&
            (player_y < map.size() - 1 && map[player_y + 1][player_x] == 'D');
 }
 
-bool fight_M(Character& player, const std::string& map_filename) {
+bool fight_M(Character& player, const std::string& map_filename, int& mercy_count) {
     // Determine the enemy type based on the map
     std::string enemy_name;
+    int hp = 0;
     if (map_filename == "maps/level1.txt") {
         // Randomly select an enemy type for level 1
         std::string enemies[] = {"Rat", "Squirrel", "Bunny", "Bird"};
         int random_index = rand() % 4; // Random number between 0 and 3
         enemy_name = enemies[random_index];
+        hp = 30;
+    } else if (map_filename == "maps/level2.txt") {
+        std::string enemies[] = {"Skeleton", "Zombie", "Ghost", "Vampire"};
+        int random_index = rand() % 4; // Random number between 0 and 3
+        enemy_name = enemies[random_index];
+        hp = 50;
+    } else if (map_filename == "maps/level3.txt") {
+        std::string enemies[] = {"Wolf", "Bear", "Fox", "Rabbit"};
+        int random_index = rand() % 4; // Random number between 0 and 3
+        enemy_name = enemies[random_index];
+        hp = 70;
+    } else if (map_filename == "maps/level4.txt") {
+        std::string enemies[] = {"demon", "devil", "ghost", "zombie"};
+        int random_index = rand() % 4; // Random number between 0 and 3
+        enemy_name = enemies[random_index];
+        hp = 100;
     } else {
         // Default enemy if map is not recognized
         enemy_name = "Unknown Creature";
+        hp = 100;
     }
+    Character enemy(enemy_name, hp);
 
-    // Create the enemy character
-    Character enemy(enemy_name, 30);
-
-    std::cout << "You encountered a " << enemy.name << "!\n";
+    std::cout << "\n You encountered a " << enemy.name << "!\n";
 
     // Fight loop
     while (player.is_alive() && enemy.is_alive()) {
         display_health(player, enemy);
         std::string action;
+        if (enemy.health < player.attack_range.second) {
+            std::cout << "\033[33mMercy is available!\n\033[0m";
+        }
         std::cout << "Choose action: (attack/mercy): ";
         std::cin >> action;
 
@@ -208,6 +228,11 @@ bool fight_M(Character& player, const std::string& map_filename) {
                 enemy_attack(enemy, player); // Enemy attacks back
             }
         } else if (action == "mercy") {
+            if (enemy.health < player.attack_range.second) {
+                std::cout << "You showed mercy and ended the fight!\n";
+                mercy_count++;
+                break; // End the fight
+            }
             player.mercy();
         } else {
             std::cout << "Invalid action!\n";
@@ -216,12 +241,26 @@ bool fight_M(Character& player, const std::string& map_filename) {
 
     if (player.is_alive()) {
         std::cout << "You defeated the " << enemy.name << "!\n";
-        int gold_earned = rand() % 3 + 3; // Random gold between 3 and 5
-        player.gold += gold_earned;
-        std::cout << "You earned " << gold_earned << " gold!\n";
+        if (map_filename == "maps/level1.txt") {
+            int gold_earned = rand() % 3 + 3; // Random gold between 3 and 5
+            player.gold += gold_earned;
+            std::cout << "You earned " << gold_earned << " gold!\n";
+        } else if (map_filename == "maps/level2.txt") {
+            int gold_earned = rand() % 5 + 5; // Random gold between 5 and 10
+            player.gold += gold_earned;
+            std::cout << "You earned " << gold_earned << " gold!\n";
+        } else if (map_filename == "maps/level3.txt") {
+            int gold_earned = rand() % 7 + 7; // Random gold between 7 and 14
+            player.gold += gold_earned;
+            std::cout << "You earned " << gold_earned << " gold!\n";
+        } else if (map_filename == "maps/level4.txt") {
+            int gold_earned = rand() % 10 + 10; // Random gold between 10 and 20
+            player.gold += gold_earned;
+            std::cout << "You earned " << gold_earned << " gold!\n";
+        }   
         return true;
     } else {
-        std::cout << "You have been defeated by the " << enemy.name << "!\n";
+            std::cout << "You have been defeated by the " << enemy.name << "!\n";
         Sleep(3000);
         return false;
     }
@@ -235,5 +274,67 @@ void Character::use_health_potion() {
     } else {
         std::cout << "No health potions left!\n";
     }
+}
+int count_enemies(const std::vector<std::string>& map) {
+    int remaining_enemies = 0;
+    for (const auto& row : map) {
+        remaining_enemies += std::count(row.begin(), row.end(), 'M');
+    }
+    return remaining_enemies;
+}
+bool fight_boss(Character& player, Character& enemy, int& mercy_count) {
+    player.max_health = 1000;
+    player.health = player.max_health;
+    std::cout << "\n You encountered " << enemy.name << "!\n";
+    
+    while (player.is_alive() && enemy.is_alive()) {
+        display_health(player, enemy);
+        std::string action;
+        if (enemy.health < player.attack_range.second) {
+            std::cout << "\033[33mMercy is available!\n\033[0m";
+        }
+        std::cout << "Choose action: (attack/mercy): ";
+        std::cin >> action;
+
+        if (action == "attack") {
+            player_attack(player, enemy); // Player attacks
+            if (enemy.is_alive()) {
+                enemy_attack(enemy, player); // Enemy attacks back
+            }
+            else {
+                system("cls");
+                std::cout << enemy.name << ":\033[31mYOU WILL REGRET KILLING ME\033[0m\n";
+                Sleep(2000);
+                std::cout << enemy.name << ":\033[31mYOU WILL PAY DEARLY FOR THIS\033[0m\n";
+                Sleep(2000);
+            }
+        } else if (action == "mercy") {
+            if (enemy.health < player.attack_range.second) {
+                std::cout << "You showed mercy and ended the fight!\n";
+                Sleep(2000);
+                mercy_count++;
+                std::cout << enemy.name << ": thank you for showing mercy\n";
+                Sleep(2000);
+                std::cout << enemy.name << ": you are a good person\n";
+                Sleep(2000);
+                std::cout << enemy.name << ": i owe you my life\n";
+                Sleep(2000);
+                break; // End the fight
+            }
+            player.mercy();
+        } else {
+            std::cout << "Invalid action!\n";
+        }
+    }
+
+    if (player.is_alive()) {
+        std::cout << "You defeated the " << enemy.name << "!\n";
+        return true;
+    } else {
+        std::cout << "You have been defeated by the " << enemy.name << "!\n";
+        Sleep(3000);
+        return false;
+    }
+   
 }
 

@@ -1,0 +1,19 @@
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+T      T     M            MBPB T
+T TTTTT TTT T T  TTTTTTTTTTBBT
+T T   T  M   T M            T
+T TTT T TTT T T TTTTTTTTTTT T
+T     T     T T     M       T
+T TTT T TTT T T TTTTTTTTTTT T
+T T   T     T T            T
+T TTT T TTT T T TTTTTTTTTTT T
+T     T    M T M            T
+T TTT T TTTTT T TTTTTTTTTTT T
+T T   T     T T            T
+T TTT T TTT T T TTTTTTTTT T T
+T     T  M   T T          T T
+T TTT T TTT T TTTTTTTTTTT T
+T M   M     T T            T
+T TTT T TTTTT TTTTTTTTTTT T
+T      T     S              T
+TTTTTTTTTTTTTTTTTTTTTTTTTTTT

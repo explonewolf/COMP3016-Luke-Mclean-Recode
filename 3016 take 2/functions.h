@@ -10,12 +10,13 @@ class Character {
 public:
     std::string name;
     int health;
+    int max_health;
     std::pair<int, int> attack_range; // attack_range as a pair of integers
     std::string weapon; // attribute for weapon
     int health_potions; // attribute for health potions
     int gold; // attribute for gold
 
-    Character(std::string n, int h) : name(n), health(h), attack_range(5, 15), weapon("Fists"), health_potions(0), gold(0) {} // Initialize weapon
+    Character(std::string n, int h) : name(n), health(h), max_health(h), attack_range(5, 15), weapon("Fists"), health_potions(0), gold(0) {} // Initialize max_health
 
     int attack(Character& other);
     void mercy();
@@ -32,5 +33,7 @@ void end_screen(const Character& player);
 void player_attack(Character& player, Character& enemy);
 void enemy_attack(Character& enemy, Character& player);
 bool is_next_to_door(int player_x, int player_y, const std::vector<std::string>& map);
-bool fight_M(Character& player, const std::string& map_filename);
+bool fight_M(Character& player, const std::string& map_filename, int& mercy_count);
+int count_enemies(const std::vector<std::string>& map);
+bool fight_boss(Character& player, Character& enemy, int& mercy_count);
 #endif // FUNCTIONS_H
