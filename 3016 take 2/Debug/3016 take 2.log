@@ -1,0 +1,19 @@
+﻿  3016 take 2.cpp
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(70,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(82,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(84,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(89,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(91,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(96,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(98,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(107,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(159,21): warning C4018: '>': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(210,46): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(216,46): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(300,37): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(304,37): warning C4018: '<': signed/unsigned mismatch
+  functions.cpp
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\functions.cpp(176,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\functions.cpp(178,22): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  3016 take 2.vcxproj -> C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\Debug\3016 take 2.exe

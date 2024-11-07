@@ -9,7 +9,7 @@
 #include <windows.h>
 #include "functions.h"
 #include <vector>
-#include <bits/algorithmfwd.h>
+#include <algorithm>
 
 int Character::attack(Character& other) {
     std::cout << name << " is attacking " << other.name << std::endl; // Debug statement

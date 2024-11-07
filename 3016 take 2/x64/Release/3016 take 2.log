@@ -1,0 +1,16 @@
+﻿  3016 take 2.cpp
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(52,53): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(66,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(75,68): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(103,63): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(109,68): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(158,105): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(160,48): warning C4267: '-=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\3016 take 2.cpp(318,77): warning C4244: '+=': conversion from '__int64' to 'int', possible loss of data
+  functions.cpp
+C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\3016 take 2\functions.cpp(281,69): warning C4244: '+=': conversion from '__int64' to 'int', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 380 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  3016 take 2.vcxproj -> C:\Users\firem\source\repos\COMP3016-Luke-Mclean-Recode\x64\Release\3016 take 2.exe

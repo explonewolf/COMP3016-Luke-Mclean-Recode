@@ -140,6 +140,37 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3016 take 2.cpp" />
+    <ClCompile Include="functions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="functions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\ending1.txt" />
+    <Text Include="maps\ending2.txt" />
+    <Text Include="maps\ending21.txt" />
+    <Text Include="maps\ending22.txt" />
+    <Text Include="maps\ending23.txt" />
+    <Text Include="maps\ending24.txt" />
+    <Text Include="maps\ending25.txt" />
+    <Text Include="maps\ending26.txt" />
+    <Text Include="maps\ending27.txt" />
+    <Text Include="maps\ending28.txt" />
+    <Text Include="maps\ending29.txt" />
+    <Text Include="maps\level1.txt" />
+    <Text Include="maps\level2.txt" />
+    <Text Include="maps\level3.txt" />
+    <Text Include="maps\level4.txt" />
+    <Text Include="maps\level5.txt" />
+    <Text Include="maps\shop.txt" />
+    <Text Include="maps\shop2.txt" />
+    <Text Include="maps\shop3.txt" />
+    <Text Include="maps\shop4.txt" />
+    <Text Include="maps\town.txt" />
+    <Text Include="maps\town2.txt" />
+    <Text Include="maps\town3.txt" />
+    <Text Include="maps\town4.txt" />
+    <Text Include="maps\Tutorial.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

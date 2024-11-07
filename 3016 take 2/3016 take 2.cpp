@@ -13,6 +13,9 @@
 #include <algorithm>
 #include <windows.h>
 
+#define MAX_LINES ( (sizeof(instructions) / sizeof(instructions[0])) > (sizeof(legend) / sizeof(legend[0])) ? \
+                    (sizeof(instructions) / sizeof(instructions[0])) : (sizeof(legend) / sizeof(legend[0])) )
+
 int get_terminal_width() {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int columns;
@@ -143,7 +146,9 @@ void display_header(int terminal_width, Character& player) {
         "Doors: D"
     };
 
-    int max_lines = std::max(sizeof(instructions) / sizeof(instructions[0]), sizeof(legend) / sizeof(legend[0]));
+    //int max_lines = std::max(sizeof(instructions) / sizeof(instructions[0]), sizeof(legend) / sizeof(legend[0]));
+    int max_lines = MAX_LINES;
+
 
     for (int i = 0; i < max_lines; ++i) {
         if (i < sizeof(instructions) / sizeof(instructions[0])) {

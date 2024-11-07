@@ -13,10 +13,98 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\maps">
+      <UniqueIdentifier>{44a0fef0-e14c-4d2b-99ac-c32fa60d380a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3016 take 2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="functions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\ending1.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending2.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending21.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending22.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending23.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending24.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending25.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending26.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending27.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending28.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\ending29.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\level1.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\level2.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\level3.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\level4.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\level5.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\shop.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\shop2.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\shop3.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\shop4.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\town.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\town2.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\town3.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\town4.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
+    <Text Include="maps\Tutorial.txt">
+      <Filter>Source Files\maps</Filter>
+    </Text>
   </ItemGroup>
 </Project>

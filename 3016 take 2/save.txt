@@ -1,8 +1,8 @@
-@ 427
+@ 100
 mercy count 0
-The Final Boss -68
+Tutorial Enemy -7
 player position 1 1
-map maps/ending2.txt
-weapon Fists 70 90
-health potions 11
-gold 138
+map maps/level2.txt
+weapon Fists 20 30
+health potions 5
+gold 15
