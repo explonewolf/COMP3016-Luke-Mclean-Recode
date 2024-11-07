@@ -5,8 +5,7 @@ https://youtu.be/ZL9ky_bVAco
 
 
 firstly delete save.txt
-then either open it via Visual Studio Code and run it if you have G++ installed
-or run it via the exe 
+if using visual studio 2022 click project > retarget solution and click ok
 
 #1. Dependencies Used
 Standard Libraries:
