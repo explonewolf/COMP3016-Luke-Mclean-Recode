@@ -42,6 +42,7 @@ void display_health(const Character& player, const Character& enemy) {
 
 void save_game(const Character& player, const Character& enemy, const int mercy_count, int player_x, int player_y, const std::string& map_filename) {
     std::ofstream file("save.txt");
+    //if (player.health <= 0) { player.health = 100; }
     file << player.name << " " << player.health << "\n";
     file << "mercy count " << mercy_count << "\n";
     file << enemy.name << " " << enemy.health << "\n";
@@ -152,9 +153,9 @@ void load_map(const std::string& filename) {
 
 void end_screen(const Character& player) {
     if (player.health > 0) {
-        std::cout << "You are a Hero!\n";
+        //std::cout << "You are a Hero!\n";
     } else {
-        std::cout << "You are a Monster!\n";
+        //std::cout << "You are a Monster!\n";
     }
 }
 
@@ -261,6 +262,7 @@ bool fight_M(Character& player, const std::string& map_filename, int& mercy_coun
         return true;
     } else {
         std::cout << "You have been defeated by the " << enemy.name << "!\n";
+        player.health = 100;
         Sleep(3000);
         return false;
     }
